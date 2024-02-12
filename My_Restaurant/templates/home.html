@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mt-5 justify-content-center align-items-center home_css">
+        <div class="col-md-6 div-class">
+            <h2>Welcom To <br> <span class="">The Restaurant</span></h2>
+            <p>At The Restaurant, we believe that good food brings people together, and we're honored to be a part of your memorable moments. Welcome, and let the culinary journey begin.</p>
+            <button class="btn btn-primary">Buy Now</button>
+        </div>
+        <div class="col-md-6 burger">
+            <img class="w-75" src="{% static 'images/burger.png' %}" alt="picture">
+        </div>
+    </div>
+</div>
+{% endblock %}

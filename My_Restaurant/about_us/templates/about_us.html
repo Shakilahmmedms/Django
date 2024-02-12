@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+   <link rel="stylesheet" href="{% static 'about.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row about_us">
+        <div class="col-md-6">
+            <img class="w-50" src="{% static 'AF_ID card.jpg' %}" alt="">
+        </div>
+        <div class="col-md-6">
+            <h2 class="about_title">Hello I am Shakil Ahmmed</h2>
+            <p class="about_details"> I am a Web designer and Digital Marketer.
+                Through Website Clone, web design, LinkedIn Profile Optimize, B2B lead generation, on-page SEO, Website SEO Audit report, and more, I've helped organizations and people expand their online presence. Yes, I am fascinated by technology and future developments.</p>
+            <a class="icone" href=""><i class="fa-brands fa-facebook"></i></a>
+            <a class="icone" href=""><i class="fa-brands fa-linkedin"></i></i></a>
+            <a class="icone" href=""><i class="fa-brands fa-instagram"></i></i></a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+.burger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.div-class {
+    width: 43%;
+}
+
+.div-class h2 {
+    margin-bottom: 40px;
+}
+
+.col-md-6.div-class p {
+    margin-bottom: 29px;
+}

@@ -1,0 +1,19 @@
+.about_us {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+a.icone {
+    padding: 5px 10px;
+}
+
+a.icone i {
+    font-size: x-large;
+}
+h2.about_title {
+    margin-bottom: 30px;
+}
+
+p.about_details {
+    margin-bottom: 25px;
+}
