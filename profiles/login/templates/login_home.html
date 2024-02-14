@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Name : {{name | default:"User Not Found"}}</h1>
+<h1>Email : {{email | default:"Email not Found"}}</h1>
+{% endblock %}
