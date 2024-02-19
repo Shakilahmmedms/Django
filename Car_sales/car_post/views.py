@@ -2,25 +2,46 @@ from django.shortcuts import render,redirect
 from .import forms
 from .import models
 from django.contrib.auth.decorators import login_required
-from django.views.generic import CreateView
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView
-from django.views.generic import DeleteView,DetailView
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 
-# class AddCarView(CreateView):
-#     model = 
+def detail_post_view(request, id):
+    cars = models.CarPosts.objects.get(id=id)
+    
+    if request.method == 'POST':
+        comment_form = forms.CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.cars = cars
+            new_comment.save()
+    
+    comments = cars.comments.all()
+    comment_form = forms.CommentForm()
+    
+    context = {
+        'cars': cars,
+        'comments': comments,
+        'comment_form': comment_form
+    }
+    
+    return render(request, 'car_details.html', context)
 
-# @method_decorator(login_required, name='dispatch')
-# class AddCarView(CreateView):
-#     model = models.CarPosts
-#     form_class = forms.CarForm
-#     template_name = 'home.html'
-#     success_url = reverse_lazy('add_car')
-#     def form_valid(self, form):
-#         form.instance.author = self.request.user
-#         return super().form_valid(form)
 
-def Car_list(request):
-    data = models.CarPosts.objects.all()
-    return render(request,'home.html', {'data':data})
+
+@login_required
+def buy_car(request, id):
+    car = models.CarPosts.objects.get(id=id)
+    cars = models.CarPosts.objects.all()
+    if car.quantity > 0:
+        models.BuyNow.objects.create(user=request.user, car=car)
+        car.quantity -= 1
+        car.save()
+        messages.success(request, 'Car Buy Successfully')
+        return render(request, 'profile.html',{'cars':cars}) 
+    else:
+        messages.error(request, 'Car is out of stock')
+    return render(request, 'profile.html',{'cars':cars})
+
+
+

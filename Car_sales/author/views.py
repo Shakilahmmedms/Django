@@ -3,11 +3,10 @@ from .import forms
 from django.contrib import messages
 from .import models
 from django.contrib.auth import logout
-from django.contrib.auth.views import LoginView,LogoutView
+from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
-from django.views.generic import RedirectView,UpdateView
-
+from car_post.models import CarPosts
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
@@ -40,9 +39,6 @@ class UserLoginView(LoginView):
         context['type'] = 'Login'
         return context
 
-@login_required
-def profile(request):
-    return render(request,'profile.html')
 
 
 def user_logout(request):
@@ -62,4 +58,11 @@ def edit_profile(request):
         profile_form = forms.ChangeUserData(instance = request.user)
     return render(request,'edit_profile.html',{'form':profile_form })
     
+
+@login_required
+def profile(request):
+    cars = CarPosts.objects.all()
+    buy_history = models.BuyNow.objects.filter(user=request.user)
+    return render(request,'profile.html', {'buy_history':buy_history,'cars':cars})
+ 
 
