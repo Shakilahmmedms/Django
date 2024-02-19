@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
-
+from car_post.models import CarPosts
 def home(request):
-    return render(request,'home.html')
+    data = CarPosts.objects.all()
+    return render(request,'home.html' ,{'data':data})

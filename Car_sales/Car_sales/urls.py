@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from .import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +26,7 @@ urlpatterns = [
     path('author/',include('author.urls')),
     path('category/<slug:category_slug>/',views.home, name='category_wise_car'),
     path('categorie/', include('categories.urls')),
+    path('order/', include('oders.urls')),
+    path('car_post/',include('car_post.urls')),
 ]
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

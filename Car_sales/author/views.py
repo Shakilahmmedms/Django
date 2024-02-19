@@ -2,8 +2,12 @@ from django.shortcuts import render,redirect
 from .import forms
 from django.contrib import messages
 from .import models
+from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView,LogoutView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.views.generic import RedirectView,UpdateView
+
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
@@ -35,8 +39,27 @@ class UserLoginView(LoginView):
         context = super().get_context_data(**kwargs)
         context['type'] = 'Login'
         return context
+
+@login_required
+def profile(request):
+    return render(request,'profile.html')
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        profile_form = forms.ChangeUserData(request.POST, instance = request.user)
+        if profile_form.is_valid():
+            messages.success(request,'Profile Updated Successfuly')
+            profile_form.save()
+            return redirect('profile')
+    else:   
+        profile_form = forms.ChangeUserData(instance = request.user)
+    return render(request,'edit_profile.html',{'form':profile_form })
     
 
-
-# class EditUserData(LoginView):
-#     model = models.
